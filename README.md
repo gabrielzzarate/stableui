@@ -17,7 +17,7 @@ Peer dependencies:
 
 ```tsx
 // Import styles once in your app (required)
-import 'stableui/dist/stableui.css'
+import 'stableui/styles.css'
 
 import { Button } from 'stableui'
 
