@@ -114,7 +114,7 @@ export function DateRangePicker({
           <div
             id="date"
             className={cn(
-              'w-[300px] justify-start text-left font-normal',
+              'w-[300px] flex items-center justify-start text-left font-normal',
               !currentRange && 'text-muted-foreground',
               triggerClassName,
             )}

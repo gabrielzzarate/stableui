@@ -32,10 +32,10 @@ This library ships with fully precompiled CSS, so consuming apps don't need Tail
 
 ## Development
 
-- `npm run dev` – simple playground at `src/playground/App.tsx`
 - `npm run build` – builds ESM and CJS to `dist/`
 - `npm run typecheck` – TS type checking
 - `npm run lint` – lint source
+- `npm run storybook` – start Storybook for component development
 
 ### Adding new components
 
