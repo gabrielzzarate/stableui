@@ -1,16 +1,11 @@
 import path from 'path'
-import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    dts({ rollupTypes: true, tsconfigPath: 'tsconfig.build.json' }),
-  ],
+  plugins: [react(), dts({ rollupTypes: true, tsconfigPath: 'tsconfig.build.json' })],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -25,6 +20,9 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
+      output: {
+        assetFileNames: 'style.css',
+      },
     },
     sourcemap: true,
     target: 'es2022',
