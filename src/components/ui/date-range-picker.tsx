@@ -42,6 +42,7 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const [currentRange, setCurrentRange] = React.useState<DateRange | undefined>(date)
   const [internalOpen, setInternalOpen] = React.useState(false)
+  const isSelectingRef = React.useRef(false)
 
   // Use controlled open state if provided, otherwise use internal state
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen
@@ -67,33 +68,44 @@ export function DateRangePicker({
       setCurrentRange(selectedRange)
       onDateChange?.(selectedRange)
 
-      // Only close if both dates are selected
-      if (selectedRange.from && selectedRange.to) {
+      // Mark that we're in the middle of selecting
+      if (selectedRange.from && !selectedRange.to) {
+        isSelectingRef.current = true
+      } else if (selectedRange.from && selectedRange.to) {
+        isSelectingRef.current = false
         setOpen(false)
       }
     } else if (selectedRange === undefined) {
       setCurrentRange(undefined)
       onDateChange?.(undefined)
+      isSelectingRef.current = false
     }
   }
 
   const handleOpenChange = (newOpen: boolean) => {
     if (newOpen) {
       setOpen(true)
+      isSelectingRef.current = false
     } else {
       // Allow closing if:
       // 1. We have a complete range (both from and to dates)
       // 2. We have no dates selected (user clicked outside or on trigger)
-      // 3. User is explicitly closing via parent component
+      // 3. We're not in the middle of selecting a range
       if (currentRange?.from && currentRange?.to) {
+        // Complete range - allow closing
         setOpen(false)
       } else if (!currentRange?.from) {
+        // No dates selected - allow closing (user clicked outside or on trigger)
+        setOpen(false)
+      } else if (!isSelectingRef.current) {
+        // Not in the middle of selecting - allow closing
         setOpen(false)
       }
-      // If we only have the first date selected, don't close automatically
-      // This prevents closing when user is trying to select the second date
+      // If we're in the middle of selecting (only first date selected), don't close
     }
   }
+
+  console.log('currentRange', currentRange, 'isSelectingRef', isSelectingRef.current)
 
   return (
     <div className={cn('grid gap-2', className)}>
