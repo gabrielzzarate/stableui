@@ -25,6 +25,8 @@ interface DateRangePickerProps {
   open?: boolean
   onOpenChange?: (open: boolean) => void
   appendToPopover?: React.ReactNode
+  rangeDisplayOverride?: React.ReactNode
+  calendarClassName?: string
 }
 
 export function DateRangePicker({
@@ -41,6 +43,8 @@ export function DateRangePicker({
   open: controlledOpen,
   onOpenChange,
   appendToPopover,
+  calendarClassName,
+  ...props
 }: DateRangePickerProps) {
   const [currentRange, setCurrentRange] = React.useState<DateRange | undefined>(date)
   const [internalOpen, setInternalOpen] = React.useState(false)
@@ -115,32 +119,36 @@ export function DateRangePicker({
     <div className={cn('grid gap-2', className)}>
       <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
-          <div
-            id="date"
-            className={cn(
-              'w-[300px] flex items-center justify-start text-left font-normal',
-              !currentRange && 'text-muted-foreground',
-              triggerClassName,
-            )}
-          >
-            {showCalendarIcon && calendarIcon}
-            {currentRange?.from ? (
-              currentRange.to ? (
-                <>
-                  {format(currentRange.from, 'LLL dd, y')} - {format(currentRange.to, 'LLL dd, y')}
-                </>
+          {props?.rangeDisplayOverride ?? (
+            <div
+              id="date"
+              className={cn(
+                'w-[300px] flex items-center justify-start text-left font-normal',
+                !currentRange && 'text-muted-foreground',
+                triggerClassName,
+              )}
+            >
+              {showCalendarIcon && calendarIcon}
+              {currentRange?.from ? (
+                currentRange.to ? (
+                  <>
+                    {format(currentRange.from, 'LLL dd, y')} -{' '}
+                    {format(currentRange.to, 'LLL dd, y')}
+                  </>
+                ) : (
+                  format(currentRange.from, 'LLL dd, y')
+                )
               ) : (
-                format(currentRange.from, 'LLL dd, y')
-              )
-            ) : (
-              <span>{placeholder}</span>
-            )}
-          </div>
+                <span>{placeholder}</span>
+              )}
+            </div>
+          )}
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             initialFocus
             mode="range"
+            className={calendarClassName}
             defaultMonth={currentRange?.from}
             selected={currentRange}
             onSelect={handleSelect}
