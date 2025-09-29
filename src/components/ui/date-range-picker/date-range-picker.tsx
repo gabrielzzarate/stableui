@@ -24,6 +24,7 @@ interface DateRangePickerProps {
   calendarIcon?: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  appendToPopover?: React.ReactNode
 }
 
 export function DateRangePicker({
@@ -39,6 +40,7 @@ export function DateRangePicker({
   calendarIcon = <CalendarIcon className="mr-2 h-4 w-4" />,
   open: controlledOpen,
   onOpenChange,
+  appendToPopover,
 }: DateRangePickerProps) {
   const [currentRange, setCurrentRange] = React.useState<DateRange | undefined>(date)
   const [internalOpen, setInternalOpen] = React.useState(false)
@@ -73,7 +75,14 @@ export function DateRangePicker({
         isSelectingRef.current = true
       } else if (selectedRange.from && selectedRange.to) {
         isSelectingRef.current = false
-        setOpen(false)
+        // Only close the popover if this is a new range selection
+        // Don't close if the user is modifying an existing range
+        const wasExistingRange = currentRange?.from && currentRange?.to
+        const isNewRange = !wasExistingRange
+
+        if (isNewRange) {
+          setOpen(false)
+        }
       }
     } else if (selectedRange === undefined) {
       setCurrentRange(undefined)
@@ -85,16 +94,13 @@ export function DateRangePicker({
   const handleOpenChange = (newOpen: boolean) => {
     if (newOpen) {
       setOpen(true)
+      // Reset selection state when opening
       isSelectingRef.current = false
     } else {
       // Allow closing if:
-      // 1. We have a complete range (both from and to dates)
-      // 2. We have no dates selected (user clicked outside or on trigger)
-      // 3. We're not in the middle of selecting a range
-      if (currentRange?.from && currentRange?.to) {
-        // Complete range - allow closing
-        setOpen(false)
-      } else if (!currentRange?.from) {
+      // 1. We have no dates selected (user clicked outside or on trigger)
+      // 2. We're not in the middle of selecting a range
+      if (!currentRange?.from) {
         // No dates selected - allow closing (user clicked outside or on trigger)
         setOpen(false)
       } else if (!isSelectingRef.current) {
@@ -104,8 +110,6 @@ export function DateRangePicker({
       // If we're in the middle of selecting (only first date selected), don't close
     }
   }
-
-  console.log('currentRange', currentRange, 'isSelectingRef', isSelectingRef.current)
 
   return (
     <div className={cn('grid gap-2', className)}>
@@ -144,6 +148,7 @@ export function DateRangePicker({
             numberOfMonths={numberOfMonths}
             colorTheme={colorTheme}
           />
+          {appendToPopover}
         </PopoverContent>
       </Popover>
     </div>

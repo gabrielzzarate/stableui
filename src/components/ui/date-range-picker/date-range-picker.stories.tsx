@@ -69,6 +69,33 @@ export const MultipleMonths: Story = {
   },
 }
 
+// Test story for the initial state bug fix
+export const WithInitialState: Story = {
+  render: (args) => {
+    const [dateRange, setDateRange] = useState<DateRange | undefined>({
+      from: new Date(2024, 0, 15), // January 15, 2024
+      to: new Date(2024, 0, 22), // January 22, 2024
+    })
+    return (
+      <div className="space-y-4">
+        <p className="text-sm text-muted-foreground">
+          This date range picker has an initial state. Clicking on dates within the range should not
+          close the popover.
+        </p>
+        <DateRangePicker
+          {...args}
+          date={dateRange}
+          onDateChange={setDateRange}
+          appendToPopover={<div>Hello</div>}
+        />
+      </div>
+    )
+  },
+  args: {
+    placeholder: 'Pick a date range',
+  },
+}
+
 export const NoPastDates: Story = {
   render: (args) => {
     const [dateRange, setDateRange] = useState<DateRange | undefined>({

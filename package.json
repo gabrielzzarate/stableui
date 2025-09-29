@@ -37,6 +37,7 @@
     "format": "prettier --write src//**/*.{ts,tsx,css} --config ./.prettierrc",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "prepublishOnly": "npm run build && npm run typecheck",
+    "dev": "npm run storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
