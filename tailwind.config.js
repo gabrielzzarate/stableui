@@ -11,6 +11,13 @@ export default {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        calendar: {
+          primary: 'var(--calendar-primary)',
+          primaryForeground: 'var(--calendar-primary-foreground)',
+          primaryHover: 'var(--calendar-primary-hover)',
+          rangeBg: 'var(--calendar-range-bg)',
+          rangeHover: 'var(--calendar-range-hover)',
+        },
         card: {
           DEFAULT: 'var(--card)',
           foreground: 'var(--card-foreground)',

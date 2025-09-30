@@ -112,16 +112,16 @@ function Calendar({
           ),
           button_previous: cn(
             buttonVariants({ variant: buttonVariant }),
-            'h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50',
+            'h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50 text-calendar-primary hover:text-calendar-primaryHover',
             defaultClassNames.button_previous,
           ),
           button_next: cn(
             buttonVariants({ variant: buttonVariant }),
-            'h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50',
+            'h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50 text-calendar-primary hover:text-calendar-primaryHover',
             defaultClassNames.button_next,
           ),
           month_caption: cn(
-            'flex h-[--cell-size] w-full items-center justify-center px-[--cell-size]',
+            'flex h-[--cell-size] w-full items-center justify-center px-[--cell-size] text-calendar-primary',
             defaultClassNames.month_caption,
           ),
           dropdowns: cn(
@@ -143,7 +143,7 @@ function Calendar({
           table: 'w-full border-collapse',
           weekdays: cn('flex', defaultClassNames.weekdays),
           weekday: cn(
-            'text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal',
+            'text-calendar-primary flex-1 select-none rounded-md text-[0.8rem] font-normal',
             defaultClassNames.weekday,
           ),
           week: cn('mt-2 flex w-full', defaultClassNames.week),

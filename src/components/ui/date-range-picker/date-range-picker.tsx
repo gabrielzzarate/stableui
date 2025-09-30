@@ -39,7 +39,7 @@ export function DateRangePicker({
   disablePastDates = true,
   colorTheme,
   showCalendarIcon = true,
-  calendarIcon = <CalendarIcon className="mr-2 h-4 w-4" />,
+  calendarIcon = <CalendarIcon className="mr-2 w-4 h-4" />,
   open: controlledOpen,
   onOpenChange,
   appendToPopover,
@@ -81,12 +81,12 @@ export function DateRangePicker({
         isSelectingRef.current = false
         // Only close the popover if this is a new range selection
         // Don't close if the user is modifying an existing range
-        const wasExistingRange = currentRange?.from && currentRange?.to
-        const isNewRange = !wasExistingRange
+        // const wasExistingRange = currentRange?.from && currentRange?.to
+        // const isNewRange = !wasExistingRange
 
-        if (isNewRange) {
-          setOpen(false)
-        }
+        // if (isNewRange) {
+        //   setOpen(false)
+        // }
       }
     } else if (selectedRange === undefined) {
       setCurrentRange(undefined)
@@ -104,13 +104,14 @@ export function DateRangePicker({
       // Allow closing if:
       // 1. We have no dates selected (user clicked outside or on trigger)
       // 2. We're not in the middle of selecting a range
-      if (!currentRange?.from) {
-        // No dates selected - allow closing (user clicked outside or on trigger)
-        setOpen(false)
-      } else if (!isSelectingRef.current) {
-        // Not in the middle of selecting - allow closing
-        setOpen(false)
-      }
+      // if (!currentRange?.from) {
+      //   // No dates selected - allow closing (user clicked outside or on trigger)
+      //   setOpen(false)
+      // } else if (!isSelectingRef.current) {
+      //   // Not in the middle of selecting - allow closing
+      //   setOpen(false)
+      // }
+      setOpen(false)
       // If we're in the middle of selecting (only first date selected), don't close
     }
   }
@@ -132,11 +133,11 @@ export function DateRangePicker({
               {currentRange?.from ? (
                 currentRange.to ? (
                   <>
-                    {format(currentRange.from, 'LLL dd, y')} -{' '}
-                    {format(currentRange.to, 'LLL dd, y')}
+                    {format(currentRange.from, 'MM/dd/yyyy')} -{' '}
+                    {format(currentRange.to, 'MM/dd/yyyy')}
                   </>
                 ) : (
-                  format(currentRange.from, 'LLL dd, y')
+                  format(currentRange.from, 'MM/dd/yyyy')
                 )
               ) : (
                 <span>{placeholder}</span>
@@ -144,7 +145,7 @@ export function DateRangePicker({
             </div>
           )}
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="p-0 w-auto" align="start">
           <Calendar
             initialFocus
             mode="range"
