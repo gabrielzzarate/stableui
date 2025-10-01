@@ -48,6 +48,8 @@
   --calendar-focus-ring: var(--primary);
   --calendar-focus-ring-30: var(--primary);
   --calendar-focus-ring-20: var(--primary);
+  /* Calendar typography variables */
+  --calendar-month-caption-font: inherit;
 }
 
 .dark {

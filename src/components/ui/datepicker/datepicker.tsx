@@ -52,11 +52,11 @@ export function DatePicker({
             )}
             disabled={disabled}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon className="mr-2 w-4 h-4" />
             {date ? format(date, 'PPP') : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="p-0 w-auto" align="center" side="top" hideWhenDetached={true}>
           <Calendar
             mode="single"
             selected={date}
