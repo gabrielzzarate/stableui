@@ -25,7 +25,7 @@ interface DateRangePickerProps {
   open?: boolean
   onOpenChange?: (open: boolean) => void
   appendToPopover?: React.ReactNode
-  rangeDisplayOverride?: React.ReactNode
+  overridePopoverTrigger?: React.ReactNode
   calendarClassName?: string
   sideOffset?: number
 }
@@ -121,10 +121,10 @@ export function DateRangePicker({
   return (
     <div className={cn('grid gap-2', className)}>
       <Popover open={open} onOpenChange={handleOpenChange}>
-        <PopoverTrigger asChild>
-          {props?.rangeDisplayOverride ? (
-            <div>{props?.rangeDisplayOverride}</div>
-          ) : (
+        {props?.overridePopoverTrigger ? (
+          <div>{props?.overridePopoverTrigger}</div>
+        ) : (
+          <PopoverTrigger asChild>
             <div
               id="date"
               className={cn(
@@ -147,8 +147,8 @@ export function DateRangePicker({
                 <span>{placeholder}</span>
               )}
             </div>
-          )}
-        </PopoverTrigger>
+          </PopoverTrigger>
+        )}
         <PopoverContent
           className="p-0 w-auto"
           align="center"
